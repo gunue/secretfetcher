@@ -1,5 +1,5 @@
 .aider*
 .shared_deps.md
 target*
-*.yml
+*k8s.yml
 .vscode*
