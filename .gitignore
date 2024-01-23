@@ -1,0 +1,5 @@
+.aider*
+.shared_deps.md
+target*
+*.yml
+.vscode*
