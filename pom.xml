@@ -64,8 +64,11 @@
         <artifactId>commons-codec</artifactId> <!-- Conjur Dependency -->
         <version>1.16.0</version>
     </dependency>
-
-
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId> <!-- Conjur Dependency -->
+        <version>2.10.1</version>
+    </dependency>
   </dependencies>
 
   <!-- Define the Maven plugins -->

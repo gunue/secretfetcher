@@ -24,6 +24,11 @@ services:
       - backend
     volumes:
       - ./CONJUR_CA:/tmp/conjur-connect/CONJUR_CA
+    environment:
+      CONJUR_APPLIANCE_URL: https://c.swo.local/api
+      CONJUR_ACCOUNT: conjur
+      CONJUR_AUTHN_LOGIN: user
+      CONJUR_AUTHN_API_KEY: key    
 
 networks:
   backend:

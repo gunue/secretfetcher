@@ -22,7 +22,11 @@ public class Main {
         DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
         databaseConnection.testConnection();
-
+        String secret = SecretFetcher.getConjurInstance().getSecret("secretsdev/app_pass");
+        logger.info("Pass retrieved: " + secret);
+        String secret1 = SecretFetcher.getConjurInstance().getSecret("secrets/connection_str");
+        logger.info("Connection string retrieved: " + secret1);
+        
         startServer();
 
         //String secret = SecretFetcher.getConjurInstance().getSecret();
