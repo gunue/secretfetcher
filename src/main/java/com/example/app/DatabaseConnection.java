@@ -20,7 +20,7 @@ public class DatabaseConnection {
     // Connection parameters
     private static final String DATABASE_URL = "jdbc:postgresql://postgres:5432/test_db";
     private static final String USER = "postgres";
-    private static final String PASSWORD = SecretFetcher.getConjurInstance().getSecret();
+    private static final String PASSWORD = SecretFetcher.getConjurInstance().getSecret("secretsdev/app_pass");
     
     // HikariCP connection pool
     private HikariDataSource ds;
