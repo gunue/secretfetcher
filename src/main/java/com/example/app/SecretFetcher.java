@@ -14,12 +14,12 @@ import java.nio.file.Files;
 
 public class SecretFetcher {
     private static SecretFetcher instance = null;
-    private String secret;
     private static final Logger logger = Logger.getLogger(SecretFetcher.class.getName());
+    private static Conjur conjur = null;
 
     private SecretFetcher() {
         try {
-            fetchSecret();
+            initializeConjurClient();
         } catch (Exception e) {
             logger.severe("Error in SecretFetcher constructor: " + e.getMessage());
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class SecretFetcher {
         return instance;
     }
 
-    public void fetchSecret() throws Exception {
+    private void initializeConjurClient() throws Exception {
         try {
             // CLIENT LEVEL TRUST
             final String conjurTlsCaPath = "/tmp/conjur-connect/CONJUR_CA";
@@ -74,31 +74,27 @@ public class SecretFetcher {
             Conjur conjur = new Conjur(token, conjurSSLContext);
             logger.info("Conjur setup completed");
 
-            //String secret0Path = System.getenv("SECRET0_PATH");
-            String secret1Path = System.getenv("SECRET1_PATH");
-
-            // Check for Secret Paths
-            //if (secret0Path == null) {
-            //    logger.severe("SECRET0_PATH environment variable is not set");
-            //    throw new IllegalStateException("SECRET0_PATH is not set");
-            //} else
-            //{
-            //    logger.info("Secret ID is :" + secret0Path);
-            //}
-    
-            // Retrieve secrets
-            //this.secret = conjur.variables().retrieveSecret(secret0Path);
-            this.secret = conjur.variables().retrieveSecret(secret1Path);
-
             //logger.info("Secret fetched successfully: " + this.secret);
         } catch (Exception e) {
-            logger.severe("Error in fetchSecret: " + e.getMessage());
+            logger.severe("Error in initialization: " + e.getMessage());
             e.printStackTrace();
             throw e;
         }
     }
 
-    public String getSecret() {
-        return this.secret;
+    public String getSecret(String secretPath) {
+        try {
+            if (conjur == null) {
+                logger.severe("Conjur client is not initialized");
+                throw new IllegalStateException("Conjur client is not initialized");
+            }
+
+            logger.info("Fetching secret from path: " + secretPath);
+            return conjur.variables().retrieveSecret(secretPath);
+        } catch (Exception e) {
+            logger.severe("Error in getSecret: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 }

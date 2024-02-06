@@ -82,7 +82,7 @@ static class SecretHandler implements HttpHandler {
     public void handle(HttpExchange t) throws IOException {
         logger.info("SecretHandler invoked");
         try {
-            String secret = SecretFetcher.getConjurInstance().getSecret();
+            String secret = SecretFetcher.getConjurInstance().getSecret("secretsdev/app_pass");
             String response = "Fetched secret: " + secret;
             t.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = t.getResponseBody();
