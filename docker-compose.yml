@@ -22,6 +22,8 @@ services:
       - postgres
     networks:
       - backend
+    volumes:
+      - ./CONJUR_CA:/tmp/conjur-connect/CONJUR_CA
 
 networks:
   backend:
